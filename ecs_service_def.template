@@ -1,0 +1,35 @@
+{
+    "serviceName": "$service_name-service",
+    "cluster": "arn:aws:ecs:$region:$account:cluster/$cluster",
+    "taskDefinition": "arn:aws:ecs:$region:$account:task-definition/$service_name",
+    "loadBalancers": [
+                {
+                    "targetGroupArn": "$targetGroupArn",
+                    "containerName": "envoy",
+                    "containerPort": 443
+                }
+            ],
+    "launchType": "FARGATE",
+    "platformVersion": "LATEST",
+    "networkConfiguration": {
+                "awsvpcConfiguration": {
+                    "subnets": [
+                        "$private_subnet1", "$private_subnet2"
+                    ],
+                    "securityGroups": [
+                        "$sg"
+                    ],
+                    "assignPublicIp": "ENABLED"
+                }
+            },
+    "deploymentConfiguration": {
+                "maximumPercent": 200,
+                "minimumHealthyPercent": 100
+            },
+    "desiredCount": 2,
+    "healthCheckGracePeriodSeconds": 0,
+    "schedulingStrategy": "REPLICA",
+    "enableECSManagedTags": false,
+    "propagateTags": "NONE"
+    
+}

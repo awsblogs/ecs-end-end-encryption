@@ -1,0 +1,35 @@
+{
+    "serviceName": "ecs-end-end-encryption-service",
+    "cluster": "arn:aws:ecs:us-west-1:551961765653:cluster/ecs-end-end-encryption-cluster",
+    "taskDefinition": "arn:aws:ecs:us-west-1:551961765653:task-definition/ecs-end-end-encryption",
+    "loadBalancers": [
+                {
+                    "targetGroupArn": "arn:aws:elasticloadbalancing:us-west-1:551961765653:targetgroup/https-target/3e6bed06eed53f98",
+                    "containerName": "envoy",
+                    "containerPort": 443
+                }
+            ],
+    "launchType": "FARGATE",
+    "platformVersion": "LATEST",
+    "networkConfiguration": {
+                "awsvpcConfiguration": {
+                    "subnets": [
+                        "subnet-0cb23e7b2da6116ec", "subnet-01446062d07790b98"
+                    ],
+                    "securityGroups": [
+                        "sg-0ea3f8730146cc784"
+                    ],
+                    "assignPublicIp": "ENABLED"
+                }
+            },
+    "deploymentConfiguration": {
+                "maximumPercent": 200,
+                "minimumHealthyPercent": 100
+            },
+    "desiredCount": 2,
+    "healthCheckGracePeriodSeconds": 0,
+    "schedulingStrategy": "REPLICA",
+    "enableECSManagedTags": false,
+    "propagateTags": "SERVICE"
+    
+}

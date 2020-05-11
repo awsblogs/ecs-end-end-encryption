@@ -1,0 +1,57 @@
+{
+   "containerDefinitions": [
+      {
+       "logConfiguration": {
+         "logDriver": "awslogs",
+         "options": {
+           "awslogs-group": "/ecs/$service_name",
+           "awslogs-region": "$region",
+           "awslogs-stream-prefix": "ecs"
+         }
+       },
+       "portMappings": [
+         {
+           "hostPort": 443,
+           "protocol": "tcp",
+           "containerPort": 443
+         }
+       ],
+       "cpu": 0,
+       "environment": [
+         {"name":  "DNS_NAME", "value":  "$service_name.awsblogs.info"}
+       ],
+       "image": "$aws_ecr_repository_url_proxy:latest",
+       "name": "envoy"
+     },
+     {
+       "logConfiguration": {
+         "logDriver": "awslogs",
+         "options": {
+           "awslogs-group": "/ecs/$service_name",
+           "awslogs-region": "$region",
+           "awslogs-stream-prefix": "ecs"
+         }
+       },
+       "portMappings": [
+         {
+           "hostPort": 8080,
+           "protocol": "tcp",
+           "containerPort": 8080
+         }
+       ],
+       "cpu": 0,
+       "image": "$aws_ecr_repository_url_app:latest",
+       "name": "service"
+     }
+   ],
+   "cpu": "256",
+   "taskRoleArn": "$ecsTaskExecutionRoleArn",
+   "executionRoleArn": "$ecsTaskExecutionRoleArn",
+   "family": "$service_name",
+   "memory": "512",
+   "networkMode": "awsvpc",
+   "requiresCompatibilities": [ 
+       "FARGATE" 
+    ]
+
+}

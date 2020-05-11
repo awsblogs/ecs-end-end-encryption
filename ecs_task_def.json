@@ -1,0 +1,57 @@
+{
+   "containerDefinitions": [
+      {
+       "logConfiguration": {
+         "logDriver": "awslogs",
+         "options": {
+           "awslogs-group": "/ecs/ecs-end-end-encryption",
+           "awslogs-region": "us-west-1",
+           "awslogs-stream-prefix": "ecs"
+         }
+       },
+       "portMappings": [
+         {
+           "hostPort": 443,
+           "protocol": "tcp",
+           "containerPort": 443
+         }
+       ],
+       "cpu": 0,
+       "environment": [
+         {"name":  "DNS_NAME", "value":  "ecs-end-end-encryption.awsblogs.info"}
+       ],
+       "image": "551961765653.dkr.ecr.us-west-1.amazonaws.com/ecs-end-end-encryption-blog-proxy:latest",
+       "name": "envoy"
+     },
+     {
+       "logConfiguration": {
+         "logDriver": "awslogs",
+         "options": {
+           "awslogs-group": "/ecs/ecs-end-end-encryption",
+           "awslogs-region": "us-west-1",
+           "awslogs-stream-prefix": "ecs"
+         }
+       },
+       "portMappings": [
+         {
+           "hostPort": 8080,
+           "protocol": "tcp",
+           "containerPort": 8080
+         }
+       ],
+       "cpu": 0,
+       "image": "551961765653.dkr.ecr.us-west-1.amazonaws.com/ecs-end-end-encryption-blog-app:latest",
+       "name": "service"
+     }
+   ],
+   "cpu": "256",
+   "taskRoleArn": "arn:aws:iam::551961765653:role/ECS-END-END-ENCRYPTION-ECSTaskExecutionRole-URQRCO2HC4E3",
+   "executionRoleArn": "arn:aws:iam::551961765653:role/ECS-END-END-ENCRYPTION-ECSTaskExecutionRole-URQRCO2HC4E3",
+   "family": "ecs-end-end-encryption",
+   "memory": "512",
+   "networkMode": "awsvpc",
+   "requiresCompatibilities": [ 
+       "FARGATE" 
+    ]
+
+}
